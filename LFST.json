@@ -1,0 +1,24 @@
+{
+	"InputKnowledgeItems":[
+			{"SocialNetwork": "facebook", "apikey": "1233"},
+			
+
+		]
+	"OutputKnowledgeItems":[
+
+		]
+	"learningState":[
+			{"id": "0", learningGoal": "graduate college", "distenceToLearningGoal": "20"}
+			
+
+		]
+	"stateTransition":[
+			{"City": "canton", "State": "ohio"}
+			
+		]
+		
+	"outputReccomendations":[
+		
+
+	]
+}
