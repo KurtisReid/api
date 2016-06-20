@@ -1,24 +1,71 @@
-{
-	"InputKnowledgeItems":[
-			{"SocialNetwork": "facebook", "apikey": "1233"},
-			
+"LFST" : {
+	
 
-		]
-	"OutputKnowledgeItems":[
 
-		]
-	"learningState":[
-			{"id": "0", learningGoal": "graduate college", "distenceToLearningGoal": "20"}
-			
 
-		]
-	"stateTransition":[
-			{"City": "canton", "State": "ohio"}
-			
-		]
-		
-	"outputReccomendations":[
-		
+	"InputKnowledgeItems":{
 
-	]
+			"SocialNetwork": {
+				"AccountType": "facebook",
+				"apikey": "123"
+				}
+
+
+		}
+	"OutputKnowledgeItems" : {
+		"Proposal1" : {
+			"type" : "event",
+			"effectOnDistance": "1",
+			"what" : "Hackathon",
+			"when" : "October 18",
+			"where" : "Kent State Library",
+			"contributes" : "learning Skill"
+
+		}
+		"Proposal2" : {
+
+		}
+
+
+	}
+
+	"learningState" : {
+		"initalState" : {
+			"learningGoal" : {
+				"id" : "0",
+				"distenceToLearningGoal": "20"
+			}
+		}
+
+	}
+
+
+
+
+	"stateTransition" : {
+		"Transition" : {
+			"id" : 0,
+			"cause": "location changed",
+			"distenceToLearningGoal" : "20"
+		}
+		"Transition" : {
+			"id" : 1,
+			"cause": "finished coarse",
+			"distenceToLearningGoal" : "19"
+		}
+	}
+
+
+
+
+	"outputReccomendations" : {
+		"reccomendation1" : {
+
+		}
+	}
+
+
+
+
+
 }
