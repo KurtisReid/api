@@ -1,5 +1,5 @@
 "LFST" : {
-	
+
 
 
 
@@ -12,7 +12,7 @@
 
 
 		}
-	"OutputKnowledgeItems" : {
+	"OutputKnowledgeItems":{
 		"Proposal1" : {
 			"type" : "event",
 			"effectOnDistance": "1",
@@ -23,6 +23,12 @@
 
 		}
 		"Proposal2" : {
+			"type" : "coarse",
+			"effectOnDistance": "3",
+			"title" : "Introduction to computer science",
+			"when" : "january 9th - june 17",
+			"where" : "Kent State computer science building",
+			"contributes" : "required course"
 
 		}
 
@@ -60,6 +66,7 @@
 
 	"outputReccomendations" : {
 		"reccomendation1" : {
+			"causedBy" : "stateTransition"
 
 		}
 	}
