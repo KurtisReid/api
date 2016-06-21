@@ -24,36 +24,42 @@ app.get('/listUsers', function (req, res) {
 app.get('/OutputKnowledgeItemsGET', function (req, res) {
   //gets OutputKnowledgeItems only
   //
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);
+
+  console.log(JSON.stringify(obj.OutputKnowledgeItems));
+  res.end(JSON.stringify(obj.OutputKnowledgeItems));
 })
 
 app.get('/learningStateGET', function (req, res) {
   //gets Learning state only
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);
+
+  console.log(JSON.stringify(obj.learningState));
+  res.end(JSON.stringify(obj.learningState));
 })
 
 
 
 app.get('/stateTransitionGET', function (req, res) {
   //gets stateTransition only
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);
+
+  console.log(JSON.stringify(obj.stateTransition));
+  res.end(JSON.stringify(obj.stateTransition));
 })
 
 app.get('/outputReccomendationsGET', function (req, res) {
   //gets outputReccomendations only
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);
+
+  console.log(JSON.stringify(obj.outputReccomendations));
+  res.end(JSON.stringify(obj.outputReccomendations));
+
+
 })
 
 
@@ -65,8 +71,8 @@ app.put('/put', function (req, res) {
 // POST method route
 app.post('/post', function (req, res) {
 
-  var user_name=req.body.email;//input
-  console.log("User name = "+user_name);
+  //var user_name=req.body.email;//input
+  //console.log("User name = "+user_name);
 
 
   var input = fs.readFileSync('LFST.json', 'utf8');
