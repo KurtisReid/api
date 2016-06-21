@@ -65,6 +65,7 @@ app.get('/outputReccomendationsGET', function (req, res) {
 
 app.put('/put', function (req, res) {
   res.send('Put message');
+
 });
 
 
@@ -79,8 +80,12 @@ app.post('/post', function (req, res) {
   var obj = JSON.parse(input);//converts json to javascript object
   var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
 
-  obj.inputKnowledgeItems[1] = facebookapi;//adds example to json file
+  obj.inputKnowledgeItems[1] = JSON.parse(facebookapi);//adds example to json file
   console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('Hello World > helloworld.txt');
+  });
   res.end(JSON.stringify(obj));
 
 });
@@ -93,8 +98,12 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
   var obj = JSON.parse(input);//converts json to javascript object
   var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
 
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = JSON.parse(facebookapi);//adds example to json file
+  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = JSON.parse(facebookapi);//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('Hello World > helloworld.txt');
+  });
   res.end(JSON.stringify(obj));
   res.end("Post inputKnowledgeItems");
 });
@@ -102,7 +111,17 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
 app.post('/stateTransitionPOST', function (req, res) {
   //post stateTransitions
   console.log("Post stateTransition");
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);//converts json to javascript object
+  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
 
+  obj.stateTransition[obj.stateTransition.length] = JSON.parse(facebookapi);//adds example to json file, the JSON.parse converts string to json object
+  console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('Hello World > helloworld.txt');
+  });
+  res.end(JSON.stringify(obj));
   res.end("Post stateTransition");
 });
 
