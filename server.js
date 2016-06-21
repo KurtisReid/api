@@ -69,39 +69,13 @@ app.post('/post', function (req, res) {
   console.log("User name = "+user_name);
 
 
-  var input = fs.readFileSync('inputKS.json', 'utf8');
-  var obj = JSON.parse(input);
-  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);//converts json to javascript object
+  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
 
-  obj.inputKnowledgeItems[1] = facebookapi;
+  obj.inputKnowledgeItems[1] = facebookapi;//adds example to json file
   console.log(JSON.stringify(obj));
   res.end(JSON.stringify(obj));
-
-
-  //res.send('POST request to the homepage');
-
-  /*
-  var facebookapi = '{"AccountType": "facebook","apikey": "123", "id" : "1"}'
-  var inputKS = fs.readFileSync('inputKS.json', 'utf8');
-
-  var obj = JSON.parse(inputKS);
-  obj["inputKnowledgeItems2"].push({"AccountType": "facebook","apikey": "123", "id" : "1"});
-  jsonStr = JSON.stringify(obj);
-
-console.log('post message');
-*/
-
-
-
-    //res.send('inputKnowledgeItems: ' + req.body);
-  //post location
-
-  //post SocialNetwork
-  //inputKnowledgeItems.SocialNetwork.AccountType = "facebook";
-  //inputKnowledgeItems.SocialNetwork.apikey = ""
-
-  //post stateChanges
-
 
 });
 
@@ -109,6 +83,13 @@ console.log('post message');
 app.post('/inputKnowledgeItemsPOST', function (req, res) {
   //post inputKnowledgeItems
   console.log("Post inputKnowledgeItems");
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);//converts json to javascript object
+  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
+
+  obj.inputKnowledgeItems[1] = facebookapi;//adds example to json file
+  console.log(JSON.stringify(obj));
+  res.end(JSON.stringify(obj));
   res.end("Post inputKnowledgeItems");
 });
 

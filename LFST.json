@@ -1,25 +1,20 @@
 {
-	"inputKnowledgeItems":{
-
-			"SocialNetwork": {
+	"inputKnowledgeItems":[
+			{
 				"AccountType": "facebook",
 				"apikey": "123"
-				}
-
-
-		},
-
-		"OutputKnowledgeItems":{
-			"Proposal1" : {
+			}
+		],
+		"OutputKnowledgeItems":[
+			{
 				"type" : "event",
 				"effectOnDistance": "1",
 				"what" : "Hackathon",
 				"when" : "October 18",
 				"where" : "Kent State Library",
 				"contributes" : "learning Skill"
-
 			},
-			"Proposal2" : {
+			{
 				"type" : "coarse",
 				"effectOnDistance": "3",
 				"title" : "Introduction to computer science",
@@ -27,49 +22,33 @@
 				"institution" : "Kent State University",
 				"where" : "Kent State computer science building",
 				"contributes" : "required course"
-
 			}
-
-
-		},
-
-		"learningState" : {
-			"initalState" : {
+		],
+		"learningState" : [
+			{
 				"learningGoal" : {
 					"id" : "0",
 					"distenceToLearningGoal": "20"
 				}
 			}
-
-		},
-
-
-
-
-		"stateTransition" : {
-			"Transition" : {
+		],
+		"stateTransition" : [
+			{
 				"id" : 0,
 				"cause": "location changed",
 				"distenceToLearningGoal" : "20"
 			},
-			"Transition" : {
+			{
 				"id" : 1,
 				"cause": "finished coarse",
 				"distenceToLearningGoal" : "19"
 			}
-		},
-
-
-
-
-		"outputReccomendations" : {
-			"reccomendation1" : {
+		],
+		"outputReccomendations" : [
+			{
+				"reccomendationID" : "1",
 				"causedBy" : "stateTransition",
 				"progressesTwoards": "learningGoal1"
-
-			}
-
-
-
-
+		}
+	]
 }
