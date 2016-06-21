@@ -93,7 +93,7 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
   var obj = JSON.parse(input);//converts json to javascript object
   var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
 
-  obj.inputKnowledgeItems[1] = facebookapi;//adds example to json file
+  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = JSON.parse(facebookapi);//adds example to json file
   console.log(JSON.stringify(obj));
   res.end(JSON.stringify(obj));
   res.end("Post inputKnowledgeItems");
@@ -102,6 +102,7 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
 app.post('/stateTransitionPOST', function (req, res) {
   //post stateTransitions
   console.log("Post stateTransition");
+
   res.end("Post stateTransition");
 });
 
