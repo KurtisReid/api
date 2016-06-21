@@ -6,9 +6,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-
+//test
 app.get('/',function(req,res){
   res.sendfile("index.html");
+
 });
 
 app.get('/listUsers', function (req, res) {
@@ -19,15 +20,17 @@ app.get('/listUsers', function (req, res) {
    });
 })
 
-app.get('/OutputKnowledgeItems', function (req, res) {
+
+app.get('/OutputKnowledgeItemsGET', function (req, res) {
   //gets OutputKnowledgeItems only
+  //
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
        res.end( data );
    });
 })
 
-app.get('/learningState', function (req, res) {
+app.get('/learningStateGET', function (req, res) {
   //gets Learning state only
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
@@ -35,15 +38,9 @@ app.get('/learningState', function (req, res) {
    });
 })
 
-app.get('/learningState', function (req, res) {
-  //gets Learning state only
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
-})
 
-app.get('/stateTransition', function (req, res) {
+
+app.get('/stateTransitionGET', function (req, res) {
   //gets stateTransition only
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
@@ -51,7 +48,7 @@ app.get('/stateTransition', function (req, res) {
    });
 })
 
-app.get('/outputReccomendations', function (req, res) {
+app.get('/outputReccomendationsGET', function (req, res) {
   //gets outputReccomendations only
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
@@ -68,11 +65,17 @@ app.put('/put', function (req, res) {
 // POST method route
 app.post('/post', function (req, res) {
 
-  var user_name=req.body.email;
+  var user_name=req.body.email;//input
+  console.log("User name = "+user_name);
 
-    //var password=req.body.password;
-    console.log("User name = "+user_name);
-    res.end("yes");
+
+  var input = fs.readFileSync('inputKS.json', 'utf8');
+  var obj = JSON.parse(input);
+  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';
+
+  obj.inputKnowledgeItems[1] = facebookapi;
+  console.log(JSON.stringify(obj));
+  res.end(JSON.stringify(obj));
 
 
   //res.send('POST request to the homepage');
@@ -100,6 +103,19 @@ console.log('post message');
   //post stateChanges
 
 
+});
+
+// POST method route
+app.post('/inputKnowledgeItemsPOST', function (req, res) {
+  //post inputKnowledgeItems
+  console.log("Post inputKnowledgeItems");
+  res.end("Post inputKnowledgeItems");
+});
+
+app.post('/stateTransitionPOST', function (req, res) {
+  //post stateTransitions
+  console.log("Post stateTransition");
+  res.end("Post stateTransition");
 });
 
 app.delete('/delete', function (req, res) {

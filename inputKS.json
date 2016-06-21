@@ -1,12 +1,8 @@
 {
-"inputKnowledgeItems1" : [
-		{"AccountType": "facebook","apikey": "123", "id" : "1"},
-		{"AccountType": "Flashline","apikey": "456", "id" : "2"}
-
-	],
-	"inputKnowledgeItems2" : [
-			{"AccountType": "Twitter","apikey": "123", "id" : "1"},
-			{"AccountType": "Snapchat","apikey": "456", "id" : "2"}
-
+	"inputKnowledgeItems":[
+			{
+				"AccountType": "facebook",
+				"apikey": "123"
+			}
 		]
 }
