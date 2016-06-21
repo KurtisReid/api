@@ -7,6 +7,9 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
+app.get('/',function(req,res){
+  res.sendfile("index.html");
+});
 
 app.get('/listUsers', function (req, res) {
 
@@ -64,7 +67,17 @@ app.put('/put', function (req, res) {
 
 // POST method route
 app.post('/post', function (req, res) {
+
+  var user_name=req.body.email;
+
+    //var password=req.body.password;
+    console.log("User name = "+user_name);
+    res.end("yes");
+
+
   //res.send('POST request to the homepage');
+
+  /*
   var facebookapi = '{"AccountType": "facebook","apikey": "123", "id" : "1"}'
   var inputKS = fs.readFileSync('inputKS.json', 'utf8');
 
@@ -73,6 +86,8 @@ app.post('/post', function (req, res) {
   jsonStr = JSON.stringify(obj);
 
 console.log('post message');
+*/
+
 
 
     //res.send('inputKnowledgeItems: ' + req.body);
