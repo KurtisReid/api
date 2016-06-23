@@ -3,7 +3,7 @@ var app = express();
 var fs = require("fs");
 
 var bodyParser = require('body-parser');
-var input = fs.readFileSync('outputKS.json', 'utf8');
+var input = fs.readFileSync('LFST.json', 'utf8');
 var obj = JSON.parse(input);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -12,12 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 //test
+/*
 app.get('/',function(req,res){
   res.sendfile("index.html");
 
-});
+});*/
 
-app.get('/listUsers', function (req, res) {
+app.get('/LFSTGET', function (req, res) {
 
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
@@ -104,18 +105,47 @@ app.post('/stateTransitionPOST', function (req, res) {
   res.end(JSON.stringify(obj));
 });
 
-app.delete('/quote/:id', function(req, res) {
-  console.log(obj.OutputKnowledgeItems);
+app.delete('/outputKSDELETE/:id', function(req, res) {
+  console.log(obj);
+  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
   if(obj.OutputKnowledgeItems.length <= req.params.id) {
     res.statusCode = 404;
-    return res.send('Error 404: No quote found');
+    return res.send('Error 404: item not found');
   }
 
 obj.OutputKnowledgeItems.splice(req.params.id, 1);
   res.json(true);
-  console.log(obj.OutputKnowledgeItems);
+  console.log(obj);
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('Delete sucessfull');
+  });
 
 });
+
+app.delete('/inputKSKSDELETE/:id', function(req, res) {
+  console.log(obj);
+  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
+  if(obj.inputKnowledgeItems.length <= req.params.id) {
+    res.statusCode = 404;
+    return res.send('Error 404: item not found');
+  }
+
+obj.inputKnowledgeItems.splice(req.params.id, 1);
+  res.json(true);
+  console.log(obj);
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+    console.log("899899u9");
+    console.log(JSON.stringify(obj));
+      console.log('Delete sucessfull');
+  });
+
+});
+
+
+
+
 
 var server = app.listen(8081, function () {
 
