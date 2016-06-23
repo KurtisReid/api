@@ -93,19 +93,20 @@ app.post('/post', function (req, res) {
 // POST method route
 app.post('/inputKnowledgeItemsPOST', function (req, res) {
   //post inputKnowledgeItems
+  var item = req.body;
   console.log("Post inputKnowledgeItems");
   var input = fs.readFileSync('LFST.json', 'utf8');
   var obj = JSON.parse(input);//converts json to javascript object
-  var facebookapi = '{"AccountType": "faceesgbook","apikey": "123", "id" : "2"}';//information to be added
-
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = JSON.parse(facebookapi);//adds example to json file, the JSON.parse converts string to json object
+  var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
+  console.log(item);
+  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
   fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     if (err) return console.log(err);
       console.log('Hello World > helloworld.txt');
   });
   res.end(JSON.stringify(obj));
-  res.end("Post inputKnowledgeItems");
+  //res.end("Post inputKnowledgeItems");
 });
 
 app.post('/stateTransitionPOST', function (req, res) {
