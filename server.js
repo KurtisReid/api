@@ -63,6 +63,7 @@ app.get('/outputReccomendationsGET', function (req, res) {
 
 // POST method route
 app.post('/post', function (req, res) {
+  var item = req.body;
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
   obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
@@ -77,6 +78,7 @@ app.post('/post', function (req, res) {
 
 // POST method route
 app.post('/inputKnowledgeItemsPOST', function (req, res) {
+  var item = req.body;
   console.log("Post inputKnowledgeItems");
   //var obj = JSON.parse(input);//converts json to javascript object
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
@@ -92,7 +94,7 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
 });
 
 app.post('/stateTransitionPOST', function (req, res) {
-
+  var item = req.body;
   console.log("Post stateTransition");
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
