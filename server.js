@@ -18,14 +18,20 @@ app.get('/',function(req,res){
 
 });*/
 
-app.get('/LFSTGET', function (req, res) {
+//GETS
 
+app.get('/LFSTGET', function (req, res) {
    fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
        res.end( data );
    });
 })
 
+app.get('/inputKnowledgeItemsGET', function (req, res) {
+
+  console.log(JSON.stringify(obj.inputKnowledgeItems));
+  res.end(JSON.stringify(obj.inputKnowledgeItems));
+})
 
 app.get('/OutputKnowledgeItemsGET', function (req, res) {
 
@@ -38,8 +44,6 @@ app.get('/learningStateGET', function (req, res) {
   console.log(JSON.stringify(obj.learningState));
   res.end(JSON.stringify(obj.learningState));
 })
-
-
 
 app.get('/stateTransitionGET', function (req, res) {
 
@@ -55,26 +59,7 @@ app.get('/outputReccomendationsGET', function (req, res) {
 })
 
 
-/*app.put('/put', function (req, res) {
-  res.send('Put message');
 
-});*/
-
-
-// POST method route
-app.post('/post', function (req, res) {
-  var item = req.body;
-  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
-  console.log(item);
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });
-  res.end(JSON.stringify(obj));
-
-});
 
 // POST method route
 app.post('/inputKnowledgeItemsPOST', function (req, res) {
@@ -93,6 +78,36 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
   //res.end("Post inputKnowledgeItems");
 });
 
+app.post('/outputKnowledgeItemsPOST', function (req, res) {
+  var item = req.body;
+  console.log("Post outputKnowledgeItems");
+  //var obj = JSON.parse(input);//converts json to javascript object
+  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
+  console.log(item);
+  obj.OutputKnowledgeItems[obj.OutputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
+  console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('POST sucessfull');
+  });
+  res.end(JSON.stringify(obj));
+  //res.end("Post inputKnowledgeItems");
+});
+
+app.post('/learningStatePOST', function (req, res) {
+  var item = req.body;
+  console.log("Post learningState");
+  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
+  console.log(item);
+  obj.learningState[obj.learningState.length] = item;//adds example to json file, the JSON.parse converts string to json object
+  console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('POST sucessfull');
+  });
+  res.end(JSON.stringify(obj));
+});
+
 app.post('/stateTransitionPOST', function (req, res) {
   var item = req.body;
   console.log("Post stateTransition");
@@ -107,6 +122,26 @@ app.post('/stateTransitionPOST', function (req, res) {
   res.end(JSON.stringify(obj));
 });
 
+app.post('/outputReccomendationsPOST', function (req, res) {
+  var item = req.body;
+  console.log("Post outputReccomendations");
+  //var obj = JSON.parse(input);//converts json to javascript object
+  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
+  console.log(item);
+  obj.outputReccomendations[obj.outputReccomendations.length] = item;//adds example to json file, the JSON.parse converts string to json object
+  console.log(JSON.stringify(obj));
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+      console.log('POST sucessfull');
+  });
+  res.end(JSON.stringify(obj));
+  //res.end("Post inputKnowledgeItems");
+});
+
+
+//deletes
+
+//OutputKnowledgeItems
 app.delete('/outputKSDELETE/:id', function(req, res) {
   console.log(obj);
   console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
@@ -114,7 +149,6 @@ app.delete('/outputKSDELETE/:id', function(req, res) {
     res.statusCode = 404;
     return res.send('Error 404: item not found');
   }
-
 obj.OutputKnowledgeItems.splice(req.params.id, 1);
   res.json(true);
   console.log(obj);
@@ -125,14 +159,16 @@ obj.OutputKnowledgeItems.splice(req.params.id, 1);
 
 });
 
-app.delete('/inputKSKSDELETE/:id', function(req, res) {
+
+
+//inputKnowledgeItems
+app.delete('/inputKSDELETE/:id', function(req, res) {
   console.log(obj);
   console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
   if(obj.inputKnowledgeItems.length <= req.params.id) {
     res.statusCode = 404;
     return res.send('Error 404: item not found');
   }
-
 obj.inputKnowledgeItems.splice(req.params.id, 1);
   res.json(true);
   console.log(obj);
@@ -146,9 +182,29 @@ obj.inputKnowledgeItems.splice(req.params.id, 1);
 });
 
 
+//delete outputReccomendations
+app.delete('/outputReccomendationsDELETE/:id', function(req, res) {
+  console.log(obj);
+  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
+  if(obj.outputReccomendations.length <= req.params.id) {
+    res.statusCode = 404;
+    return res.send('Error 404: item not found');
+  }
+obj.outputReccomendations.splice(req.params.id, 1);
+  res.json(true);
+  console.log(obj);
+  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    if (err) return console.log(err);
+    console.log("899899u9");
+    console.log(JSON.stringify(obj));
+      console.log('Delete sucessfull');
+  });
+
+});
 
 
 
+//listener
 var server = app.listen(8081, function () {
 
   var host = server.address().address
