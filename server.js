@@ -55,10 +55,10 @@ app.get('/outputReccomendationsGET', function (req, res) {
 })
 
 
-app.put('/put', function (req, res) {
+/*app.put('/put', function (req, res) {
   res.send('Put message');
 
-});
+});*/
 
 
 // POST method route
