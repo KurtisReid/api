@@ -96,7 +96,7 @@ app.post('/stateTransitionPOST', function (req, res) {
   console.log("Post stateTransition");
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
+  obj.stateTransition[obj.stateTransition.length] = item;//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
   fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     if (err) return console.log(err);
