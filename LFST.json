@@ -9,8 +9,9 @@
 			{
 				"type" : "event",
 				"effectOnDistance": "1",
-				"what" : "Hackathon",
+				"title" : "Hackathon",
 				"when" : "October 18",
+				"institution" : "HacKSU",
 				"where" : "Kent State Library",
 				"contributes" : "learning Skill"
 			},
