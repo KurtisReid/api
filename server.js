@@ -3,6 +3,15 @@ var app = express();
 var fs = require("fs");
 
 var bodyParser = require('body-parser');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/todoApp', function(err) {
+    if(err) {
+        console.log('connection error', err);
+    } else {
+        console.log('connection successful');
+    }
+});
 var input = fs.readFileSync('LFST.json', 'utf8');
 var obj = JSON.parse(input);
 app.use(bodyParser.json()); // support json encoded bodies
