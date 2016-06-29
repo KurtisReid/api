@@ -1,17 +1,13 @@
 var express = require('express');
 var app = express();
 var fs = require("fs");
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+
+var url = 'mongodb://localhost:27017/LFST';
+//var mongoCommands = require('getmongo.js');
 
 var bodyParser = require('body-parser');
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/todoApp', function(err) {
-    if(err) {
-        console.log('connection error', err);
-    } else {
-        console.log('connection successful');
-    }
-});
 var input = fs.readFileSync('LFST.json', 'utf8');
 var obj = JSON.parse(input);
 app.use(bodyParser.json()); // support json encoded bodies
@@ -19,20 +15,50 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 
+var findLFST = function(db, callback) {
+   var cursor =db.collection('LFSTCollection').find( );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+
+         return doc;
+      } else {
+         callback();
+      }
+   });
+};
+
 
 //test
 /*
 app.get('/',function(req,res){
   res.sendfile("index.html");
-
 });*/
 
 //GETS
 
 app.get('/LFSTGET', function (req, res) {
-   fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
+   /*fs.readFile( __dirname + "/" + "LFST.json", 'utf8', function (err, data) {
        console.log( data );
        res.end( data );
+   });*/
+   MongoClient.connect(url, function(err, db) {
+     assert.equal(null, err);
+     var docum = findLFST(db, function() {
+
+         db.close();
+     });
+
+     console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIII");
+/*
+    NOTE: NOT returning json file for some reason
+
+*/
+     res.end(docum);
+
    });
 })
 
