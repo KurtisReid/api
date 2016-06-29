@@ -14,6 +14,16 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
+MongoClient.connect(url, function(err, db) {
+assert.equal(null, err);
+
+var insertDocument = function(db, callback, insert) {
+   db.collection('LFSTCollection').insertOne(insert, function(err, result) {
+    //assert.equal(err, null);
+    console.log("Inserted a document into the restaurants collection.");
+    callback();
+  });
+};
 
 var findLFST = function(db, callback) {
    var cursor =db.collection('LFSTCollection').find( );
@@ -22,13 +32,28 @@ var findLFST = function(db, callback) {
       if (doc != null) {
         //console.log("hi");
          console.dir(doc);
-         //console.log("||||||||||||||||||||||||||");
+         console.log("||||||||||||||||||||||||||");
+
 
          return doc;
       } else {
+        //return doc;
          callback();
+
       }
    });
+};
+
+
+
+var removeRestaurants = function(db, callback) {
+   db.collection('LFSTCollection').deleteMany(
+      { "borough": "Manhattan" },
+      function(err, results) {
+         console.log(results);
+         callback();
+      }
+   );
 };
 
 
@@ -45,22 +70,43 @@ app.get('/LFSTGET', function (req, res) {
        console.log( data );
        res.end( data );
    });*/
-   MongoClient.connect(url, function(err, db) {
-     assert.equal(null, err);
-     var docum = findLFST(db, function() {
+
+   var cursor =db.collection('LFSTCollection').find( );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+
+
+
+      } else {
+        //return doc;
 
          db.close();
-     });
+         res.end(JSON.stringify(doc));
 
-     console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIII");
+      }
+
+
+     //docum = findLFST(db, function() {
+
+         //db.close();
+     //});
+
+     //console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIII");
 /*
     NOTE: NOT returning json file for some reason
 
 */
-     res.end(docum);
+//console.log(docum);
 
-   });
-})
+
+   //res.end(JSON.stringify(docum));
+});
+});
 
 app.get('/inputKnowledgeItemsGET', function (req, res) {
 
@@ -98,17 +144,22 @@ app.get('/outputReccomendationsGET', function (req, res) {
 
 // POST method route
 app.post('/inputKnowledgeItemsPOST', function (req, res) {
-  var item = req.body;
+  //var item = req.body;
   console.log("Post inputKnowledgeItems");
   //var obj = JSON.parse(input);//converts json to javascript object
-  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
-  console.log(item);
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
+  var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
+  //console.log(item);
+  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = facebookapi;//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+
+
+  insertDocument(db, function() {
+      db.close();
+  }, obj);
+  /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     if (err) return console.log(err);
       console.log('POST sucessfull');
-  });
+  });*/
   res.end(JSON.stringify(obj));
   //res.end("Post inputKnowledgeItems");
 });
@@ -237,7 +288,7 @@ obj.outputReccomendations.splice(req.params.id, 1);
 
 });
 
-
+});
 
 //listener
 var server = app.listen(8081, function () {
