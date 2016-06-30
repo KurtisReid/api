@@ -228,28 +228,142 @@ app.get('/inputKnowledgeItemsGET/:id', function (req, res) {
   //res.end(JSON.stringify(obj.inputKnowledgeItems));
 })
 
-app.get('/OutputKnowledgeItemsGET', function (req, res) {
+app.get('/OutputKnowledgeItemsGET/:id', function (req, res) {
 
-  console.log(JSON.stringify(obj.OutputKnowledgeItems));
-  res.end(JSON.stringify(obj.OutputKnowledgeItems));
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         res.end(JSON.stringify(parsed_document.OutputKnowledgeItems));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
+  //console.log(JSON.stringify(obj.OutputKnowledgeItems));
+  //res.end(JSON.stringify(obj.OutputKnowledgeItems));
 })
 
-app.get('/learningStateGET', function (req, res) {
+app.get('/learningStateGET/:id', function (req, res) {
 
-  console.log(JSON.stringify(obj.learningState));
-  res.end(JSON.stringify(obj.learningState));
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         res.end(JSON.stringify(parsed_document.learningState));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
+  //console.log(JSON.stringify(obj.learningState));
+  //res.end(JSON.stringify(obj.learningState));
 })
 
-app.get('/stateTransitionGET', function (req, res) {
+app.get('/stateTransitionGET/:id', function (req, res) {
 
-  console.log(JSON.stringify(obj.stateTransition));
-  res.end(JSON.stringify(obj.stateTransition));
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         res.end(JSON.stringify(parsed_document.stateTransition));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+  //console.log(JSON.stringify(obj.stateTransition));
+  //res.end(JSON.stringify(obj.stateTransition));
 })
 
-app.get('/outputReccomendationsGET', function (req, res) {
+app.get('/outputReccomendationsGET/:id', function (req, res) {
 
-  console.log(JSON.stringify(obj.outputReccomendations));
-  res.end(JSON.stringify(obj.outputReccomendations));
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         res.end(JSON.stringify(parsed_document.outputReccomendations));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+  //console.log(JSON.stringify(obj.outputReccomendations));
+  //res.end(JSON.stringify(obj.outputReccomendations));
 
 })
 
