@@ -160,43 +160,29 @@ app.get('/GETById/:id', function (req, res) {
 });
 
 app.get('/GETOKSById/:id', function (req, res) {
-  //57755027cb8370bc17387485
-  //57754880dfc57c4006b523cf
-  //57757132a4c101ac1a883b35
+  //GETS spific parts
   var id = new ObjectID(req.params.id);
   var parsed_document;
   var str_doc;
-  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35");
-  var arrdb = db.collection(collect).find( { _id: id } ).toArray();
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
    var cursor =db.collection(collect).find( { _id: id } );
-
-   //print parts of array
-
-
-
-
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
         //console.log("hi");
          console.dir(doc);
-         console.log("||||||||||||||||||||||||||");
+         //console.log("||||||||||||||||||||||||||");
          //console.log(doc);
          str_doc = JSON.stringify(doc);
          parsed_document = JSON.parse(str_doc);
-         console.log(parsed_document.inputKnowledgeItems);
-
-         console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
          res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
-
-
-
-
-
       } else {
+        /*
+          TODO: figure out what to here
+        */
         //return doc;
-
          //db.close();
          res.end(JSON.stringify(doc));
 
@@ -206,10 +192,40 @@ app.get('/GETOKSById/:id', function (req, res) {
     //res.end(parsed_document.inputKnowledgeItems);
 });
 
-app.get('/inputKnowledgeItemsGET', function (req, res) {
+app.get('/inputKnowledgeItemsGET/:id', function (req, res) {
 
-  console.log(JSON.stringify(obj.inputKnowledgeItems));
-  res.end(JSON.stringify(obj.inputKnowledgeItems));
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
+//old
+  //console.log(JSON.stringify(obj.inputKnowledgeItems));
+  //res.end(JSON.stringify(obj.inputKnowledgeItems));
 })
 
 app.get('/OutputKnowledgeItemsGET', function (req, res) {
