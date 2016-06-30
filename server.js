@@ -4,6 +4,8 @@ var fs = require("fs");
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
+var collect = "isThisReal";
+
 var url = 'mongodb://localhost:27017/LFST';
 //var mongoCommands = require('getmongo.js');
 
@@ -25,15 +27,16 @@ db.open(function(err, client){
 var insertDocument = function(db, callback, insert) {
 
 
-   db.collection('LFSTCollection').insertOne(insert, function(err, result) {
+   db.collection(collect).insertOne(insert, function(err, result) {
     //assert.equal(err, null);
-    console.log("Inserted a document into the restaurants collection.");
+    console.log("Inserted a document into the collection.");
     callback();
   });
 };
 
 var findLFST = function(db, callback) {
-   var cursor =db.collection('LFSTCollection').find( );
+  var return_doc;
+   var cursor =db.collection(collect).find( );
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
@@ -41,20 +44,27 @@ var findLFST = function(db, callback) {
          console.dir(doc);
          console.log("||||||||||||||||||||||||||");
 
+         return_doc += doc;
 
-         return doc;
+
+
+         //return doc;
       } else {
         //return doc;
+
+        //console.log(return_doc);
+
          callback();
 
       }
    });
+   return return_doc;
 };
 
 
 
 var removeRestaurants = function(db, callback) {
-   db.collection('LFSTCollection').deleteMany(
+   db.collection(collect).deleteMany(
       { "borough": "Manhattan" },
       function(err, results) {
          console.log(results);
@@ -78,7 +88,7 @@ app.get('/LFSTGET', function (req, res) {
        res.end( data );
    });*/
 
-   var cursor =db.collection('LFSTCollection').find( );
+   var cursor =db.collection(collect).find();
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
@@ -93,7 +103,7 @@ app.get('/LFSTGET', function (req, res) {
       } else {
         //return doc;
 
-         db.close();
+         //db.close();
          res.end(JSON.stringify(doc));
 
       }
@@ -161,7 +171,7 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
 
 
   insertDocument(db, function() {
-      db.close();
+      //db.close();
   }, obj);
   /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     if (err) return console.log(err);
