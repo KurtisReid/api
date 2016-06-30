@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var MongoClient = require('mongodb').MongoClient;
-var ObjectID = require('mongodb').ObjectID;
+var ObjectID = require('mongodb').ObjectID;//objectID object
 var assert = require('assert');
 
-var collect = "isThisReal";
+var collect = "isThisReal";//collection name
 
 var url = 'mongodb://localhost:27017/LFST';
 //var mongoCommands = require('getmongo.js');
@@ -129,10 +129,13 @@ app.get('/LFSTGET', function (req, res) {
 
 
 
-app.get('/GETById', function (req, res) {
-
-  var id_to_be_passed = new ObjectID("57754880dfc57c4006b523cf");
-   var cursor =db.collection(collect).find( { _id: id_to_be_passed } );
+app.get('/GETById/:id', function (req, res) {
+  //57755027cb8370bc17387485
+  //57754880dfc57c4006b523cf
+  //57757132a4c101ac1a883b35
+  var id = new ObjectID(req.params.id);
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35");
+   var cursor =db.collection(collect).find( { _id: id } );
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
