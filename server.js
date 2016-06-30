@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var assert = require('assert');
 
 var collect = "isThisReal";
@@ -115,13 +116,42 @@ app.get('/LFSTGET', function (req, res) {
      //});
 
      //console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIII");
-/*
-    NOTE: NOT returning json file for some reason
-*/
 //console.log(docum);
 
 
    //res.end(JSON.stringify(docum));
+});
+});
+
+
+
+
+
+
+
+app.get('/GETById', function (req, res) {
+
+  var id_to_be_passed = new ObjectID("57754880dfc57c4006b523cf");
+   var cursor =db.collection(collect).find( { _id: id_to_be_passed } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         res.end(JSON.stringify(doc));
+
+
+
+      } else {
+        //return doc;
+
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
 });
 });
 
