@@ -130,6 +130,7 @@ app.get('/LFSTGET', function (req, res) {
 
 
 app.get('/GETById/:id', function (req, res) {
+  //gets LFST document by id
   //57755027cb8370bc17387485
   //57754880dfc57c4006b523cf
   //57757132a4c101ac1a883b35
@@ -155,7 +156,54 @@ app.get('/GETById/:id', function (req, res) {
 
       }
 
+    });
 });
+
+app.get('/GETOKSById/:id', function (req, res) {
+  //57755027cb8370bc17387485
+  //57754880dfc57c4006b523cf
+  //57757132a4c101ac1a883b35
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35");
+  var arrdb = db.collection(collect).find( { _id: id } ).toArray();
+   var cursor =db.collection(collect).find( { _id: id } );
+
+   //print parts of array
+
+
+
+
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         parsed_document = JSON.parse(str_doc);
+         console.log(parsed_document.inputKnowledgeItems);
+
+         console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+
+         res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
+
+
+
+
+      } else {
+        //return doc;
+
+         //db.close();
+         res.end(JSON.stringify(doc));
+
+      }
+
+    });
+    //res.end(parsed_document.inputKnowledgeItems);
 });
 
 app.get('/inputKnowledgeItemsGET', function (req, res) {
