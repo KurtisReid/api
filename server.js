@@ -17,7 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 MongoClient.connect(url, function(err, db) {
 assert.equal(null, err);
 
+
+db.open(function(err, client){
+
+
+
 var insertDocument = function(db, callback, insert) {
+
+
    db.collection('LFSTCollection').insertOne(insert, function(err, result) {
     //assert.equal(err, null);
     console.log("Inserted a document into the restaurants collection.");
@@ -100,7 +107,6 @@ app.get('/LFSTGET', function (req, res) {
      //console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIII");
 /*
     NOTE: NOT returning json file for some reason
-
 */
 //console.log(docum);
 
@@ -148,7 +154,7 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
   var item = req.body;
   console.log("Post inputKnowledgeItems");
   //var obj = JSON.parse(input);//converts json to javascript object
-  //var facebookapi = '{"AccountType": "HIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOO","apikey": "34556357", "id" : "7"}';//information to be added
+  var facebookapi = '{"AccountType": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","apikey": "34556357", "id" : "7"}';//information to be added
   console.log(item);
   obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = facebookapi;//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
@@ -309,4 +315,6 @@ var server = app.listen(8081, function () {
 
   console.log("Example app listening at http://%s:%s", host, port)
 
-})
+});
+
+});
