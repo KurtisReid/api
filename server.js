@@ -31,6 +31,8 @@ var insertDocument = function(db, callback, insert) {
    db.collection(collect).insertOne(insert, function(err, result) {
     //assert.equal(err, null);
     console.log("Inserted a document into the collection.");
+    //console.log(insert);
+    //console.log("                                                        ");
     callback();
   });
 };
@@ -392,23 +394,58 @@ app.post('/inputKnowledgeItemsPOST', function (req, res) {
   //res.end("Post inputKnowledgeItems");
 });
 
-app.post('/outputKnowledgeItemsPOST', function (req, res) {
+app.post('/outputKnowledgeItemsPOST/:id', function (req, res) {
   var item = req.body;
   console.log("Post outputKnowledgeItems");
+  var obj;
   //var obj = JSON.parse(input);//converts json to javascript object
-  //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
-  console.log(item);
-  obj.OutputKnowledgeItems[obj.OutputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
+  var facebookapi = '{"Hello": "Wherever","you": "are", "id" : "4444444444"}';//information to be added
 
-  insertDocument(db, function() {
-      db.close();
-  }, obj);
-  /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });*/
-  res.end(JSON.stringify(obj));
+
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  //var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
+
+         console.log(item);
+         obj.OutputKnowledgeItems[obj.OutputKnowledgeItems.length] = facebookapi;//adds example to json file, the JSON.parse converts string to json object
+         console.log(JSON.stringify(obj));
+
+         insertDocument(db, function() {
+             db.close();
+         }, obj);
+         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+           if (err) return console.log(err);
+             console.log('POST sucessfull');
+         });*/
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
+
   //res.end("Post inputKnowledgeItems");
 });
 
@@ -439,10 +476,15 @@ app.post('/stateTransitionPOST', function (req, res) {
   console.log(item);
   obj.stateTransition[obj.stateTransition.length] = item;//adds example to json file, the JSON.parse converts string to json object
   console.log(JSON.stringify(obj));
+
+  insertDocument(db, function() {
+      db.close();
+  }, obj);
+  /*
   fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     if (err) return console.log(err);
       console.log('POST sucessfull');
-  });
+  });*/
   res.end(JSON.stringify(obj));
 });
 
@@ -476,10 +518,14 @@ app.delete('/outputKSDELETE/:id', function(req, res) {
 obj.OutputKnowledgeItems.splice(req.params.id, 1);
   res.json(true);
   console.log(obj);
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('Delete sucessfull');
-  });
+  insertDocument(db, function() {
+      db.close();
+  }, obj);
+
+  //fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+    //if (err) return console.log(err);
+    //  console.log('Delete sucessfull');
+  //});
 
 });
 
