@@ -11,8 +11,8 @@ var url = 'mongodb://localhost:27017/LFST';
 //var mongoCommands = require('getmongo.js');
 
 var bodyParser = require('body-parser');
-var input = fs.readFileSync('LFST.json', 'utf8');
-var obj = JSON.parse(input);
+//var input = fs.readFileSync('LFST.json', 'utf8');
+//var obj = JSON.parse(input);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -21,7 +21,7 @@ MongoClient.connect(url, function(err, db) {
 assert.equal(null, err);
 
 
-db.open(function(err, client){
+db.open(function(err, client){//opens database
 
 
 
@@ -377,7 +377,6 @@ app.post('/inputKnowledgeItemsPOST/:id', function (req, res) {
   var item = req.body;
   var obj;
   console.log("Post inputKnowledgeItems");
-  //var obj = JSON.parse(input);//converts json to javascript object
   //var facebookapi = '{"AccountType": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","apikey": "34556357", "id" : "7"}';//information to be added
   console.log(item);
 
@@ -594,21 +593,14 @@ app.post('/outputReccomendationsPOST/:id', function (req, res) {
   var obj;
   var id = new ObjectID(req.params.id);
   var parsed_document;
-  //var str_doc;
-  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
-   var cursor =db.collection(collect).find( { _id: id } );
+  var cursor =db.collection(collect).find( { _id: id } );
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
-        //console.log("hi");
          console.dir(doc);
-         //console.log("||||||||||||||||||||||||||");
-         //console.log(doc);
          str_doc = JSON.stringify(doc);
          obj = JSON.parse(str_doc);
-         //console.log(parsed_document.inputKnowledgeItems);
-         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
 
 
          console.log(item);
@@ -618,10 +610,7 @@ app.post('/outputReccomendationsPOST/:id', function (req, res) {
          insertDocument(db, function() {
              db.close();
          }, obj);
-         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-           if (err) return console.log(err);
-             console.log('POST sucessfull');
-         });*/
+
          res.end(JSON.stringify(obj));
       } else {
         /*
@@ -640,19 +629,53 @@ app.post('/outputReccomendationsPOST/:id', function (req, res) {
 //deletes
 
 //OutputKnowledgeItems
-app.delete('/outputKSDELETE/:id', function(req, res) {
-  console.log(obj);
-  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
-  if(obj.OutputKnowledgeItems.length <= req.params.id) {
-    res.statusCode = 404;
-    return res.send('Error 404: item not found');
-  }
-obj.OutputKnowledgeItems.splice(req.params.id, 1);
-  res.json(true);
-  console.log(obj);
-  insertDocument(db, function() {
-      db.close();
-  }, obj);
+app.delete('/outputKSDELETE/:id/:oid', function(req, res) {
+  //console.log(obj);
+  //console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
+
+  //var obj;
+  var input = fs.readFileSync('LFST.json', 'utf8');
+  var obj = JSON.parse(input);
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+
+
+
+         if(obj.OutputKnowledgeItems.length <= req.params.id) {
+           res.statusCode = 404;
+           return res.send('Error 404: item not found');
+         }
+       obj.OutputKnowledgeItems.splice(req.params.oid, 1);
+         res.json(true);
+         console.log(obj);
+         /*
+         insertDocument(db, function() {
+             //db.close();
+         }, obj);*/
+         console.log("DELETE                                  ");
+         console.log(obj);
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
+
+
 
   //fs.writeFile('test.json', JSON.stringify(obj), function (err) {
     //if (err) return console.log(err);
@@ -709,8 +732,8 @@ obj.outputReccomendations.splice(req.params.id, 1);
 //listener
 var server = app.listen(8081, function () {
 
-  var host = server.address().address
-  var port = server.address().port
+  var host = server.address().address;
+  var port = server.address().port;
 
   console.log("Example app listening at http://%s:%s", host, port)
 
