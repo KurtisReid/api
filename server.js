@@ -633,9 +633,9 @@ app.delete('/outputKSDELETE/:id/:oid', function(req, res) {
   //console.log(obj);
   //console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
 
-  //var obj;
-  var input = fs.readFileSync('LFST.json', 'utf8');
-  var obj = JSON.parse(input);
+  var obj;
+  //var input = fs.readFileSync('LFST.json', 'utf8');
+  //var obj = JSON.parse(input);
   var id = new ObjectID(req.params.id);
   var parsed_document;
   var cursor =db.collection(collect).find( { _id: id } );
@@ -648,17 +648,17 @@ app.delete('/outputKSDELETE/:id/:oid', function(req, res) {
 
 
 
-         if(obj.OutputKnowledgeItems.length <= req.params.id) {
+         if(obj.OutputKnowledgeItems.length <= req.params.oid) {
            res.statusCode = 404;
            return res.send('Error 404: item not found');
          }
        obj.OutputKnowledgeItems.splice(req.params.oid, 1);
          res.json(true);
          console.log(obj);
-         /*
+
          insertDocument(db, function() {
              //db.close();
-         }, obj);*/
+         }, obj);
          console.log("DELETE                                  ");
          console.log(obj);
          res.end(JSON.stringify(obj));
@@ -687,45 +687,96 @@ app.delete('/outputKSDELETE/:id/:oid', function(req, res) {
 
 
 //inputKnowledgeItems
-app.delete('/inputKSDELETE/:id', function(req, res) {
-  console.log(obj);
-  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
-  if(obj.inputKnowledgeItems.length <= req.params.id) {
-    res.statusCode = 404;
-    return res.send('Error 404: item not found');
-  }
-obj.inputKnowledgeItems.splice(req.params.id, 1);
-  res.json(true);
-  console.log(obj);
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-    console.log("899899u9");
-    console.log(JSON.stringify(obj));
-      console.log('Delete sucessfull');
-  });
+app.delete('/inputKSDELETE/:id/:oid', function(req, res) {
+  //console.log(obj);
+  //console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
+
+  var obj;
+  //var input = fs.readFileSync('LFST.json', 'utf8');
+  //var obj = JSON.parse(input);
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+
+
+
+         if(obj.inputKnowledgeItems.length <= req.params.oid) {
+           res.statusCode = 404;
+           return res.send('Error 404: item not found');
+         }
+       obj.inputKnowledgeItems.splice(req.params.oid, 1);
+         res.json(true);
+         console.log(obj);
+
+         insertDocument(db, function() {
+             //db.close();
+         }, obj);
+         console.log("DELETE                                  ");
+         console.log(obj);
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
 
 });
 
 
 //delete outputReccomendations
-app.delete('/outputReccomendationsDELETE/:id', function(req, res) {
-  console.log(obj);
-  console.log("|||||||||||||||||||||||||||||||||||||||||||||||||");
-  if(obj.outputReccomendations.length <= req.params.id) {
-    res.statusCode = 404;
-    return res.send('Error 404: item not found');
-  }
-obj.outputReccomendations.splice(req.params.id, 1);
-  res.json(true);
-  console.log(obj);
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-    console.log("899899u9");
-    console.log(JSON.stringify(obj));
-      console.log('Delete sucessfull');
-  });
+app.delete('/outputReccomendationsDELETE/:id/:oid', function(req, res) {
+  var obj;
+  //var input = fs.readFileSync('LFST.json', 'utf8');
+  //var obj = JSON.parse(input);
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
 
-});
+
+
+         if(obj.outputReccomendations.length <= req.params.oid) {
+           res.statusCode = 404;
+           return res.send('Error 404: item not found');
+         }
+       obj.outputReccomendations.splice(req.params.oid, 1);
+         res.json(true);
+         console.log(obj);
+
+         insertDocument(db, function() {
+             //db.close();
+         }, obj);
+         console.log("DELETE                                  ");
+         console.log(obj);
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
 
 });
 
@@ -739,4 +790,5 @@ var server = app.listen(8081, function () {
 
 });
 
+});
 });
