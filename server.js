@@ -373,34 +373,13 @@ app.get('/outputReccomendationsGET/:id', function (req, res) {
 
 
 // POST method route
-app.post('/inputKnowledgeItemsPOST', function (req, res) {
+app.post('/inputKnowledgeItemsPOST/:id', function (req, res) {
   var item = req.body;
+  var obj;
   console.log("Post inputKnowledgeItems");
   //var obj = JSON.parse(input);//converts json to javascript object
-  var facebookapi = '{"AccountType": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","apikey": "34556357", "id" : "7"}';//information to be added
+  //var facebookapi = '{"AccountType": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","apikey": "34556357", "id" : "7"}';//information to be added
   console.log(item);
-  obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = facebookapi;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
-
-
-  insertDocument(db, function() {
-      //db.close();
-  }, obj);
-  /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });*/
-  res.end(JSON.stringify(obj));
-  //res.end("Post inputKnowledgeItems");
-});
-
-app.post('/outputKnowledgeItemsPOST/:id', function (req, res) {
-  var item = req.body;
-  console.log("Post outputKnowledgeItems");
-  var obj;
-  //var obj = JSON.parse(input);//converts json to javascript object
-  var facebookapi = '{"Hello": "Wherever","you": "are", "id" : "4444444444"}';//information to be added
-
 
   var id = new ObjectID(req.params.id);
   var parsed_document;
@@ -422,7 +401,60 @@ app.post('/outputKnowledgeItemsPOST/:id', function (req, res) {
 
 
          console.log(item);
-         obj.OutputKnowledgeItems[obj.OutputKnowledgeItems.length] = facebookapi;//adds example to json file, the JSON.parse converts string to json object
+         obj.inputKnowledgeItems[obj.inputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
+         console.log(JSON.stringify(obj));
+
+         insertDocument(db, function() {
+             db.close();
+         }, obj);
+         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+           if (err) return console.log(err);
+             console.log('POST sucessfull');
+         });*/
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
+  //res.end("Post inputKnowledgeItems");
+});
+
+app.post('/outputKnowledgeItemsPOST/:id', function (req, res) {
+  var item = req.body;
+  console.log("Post outputKnowledgeItems");
+
+  //var obj = JSON.parse(input);//converts json to javascript object
+  //var facebookapi = '{"Hello": "Wherever","you": "are", "id" : "4444444444"}';//information to be added
+
+  var obj;
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  //var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
+
+         console.log(item);
+         obj.OutputKnowledgeItems[obj.OutputKnowledgeItems.length] = item;//adds example to json file, the JSON.parse converts string to json object
          console.log(JSON.stringify(obj));
 
          insertDocument(db, function() {
@@ -449,59 +481,159 @@ app.post('/outputKnowledgeItemsPOST/:id', function (req, res) {
   //res.end("Post inputKnowledgeItems");
 });
 
-app.post('/learningStatePOST', function (req, res) {
+app.post('/learningStatePOST/:id', function (req, res) {
   var item = req.body;
   console.log("Post learningState");
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
-  obj.learningState[obj.learningState.length] = item;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
+
+  var obj;
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  //var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
 
 
-  insertDocument(db, function() {
-      db.close();
-  }, obj);
-  /*
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });*/
-  res.end(JSON.stringify(obj));
+         console.log(item);
+         obj.learningState[obj.learningState.length] = item;//adds example to json file, the JSON.parse converts string to json object
+         console.log(JSON.stringify(obj));
+
+         insertDocument(db, function() {
+             db.close();
+         }, obj);
+         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+           if (err) return console.log(err);
+             console.log('POST sucessfull');
+         });*/
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
 });
 
-app.post('/stateTransitionPOST', function (req, res) {
+app.post('/stateTransitionPOST/:id', function (req, res) {
   var item = req.body;
   console.log("Post stateTransition");
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
-  obj.stateTransition[obj.stateTransition.length] = item;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
 
-  insertDocument(db, function() {
-      db.close();
-  }, obj);
-  /*
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });*/
-  res.end(JSON.stringify(obj));
+  var obj;
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  //var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
+
+         console.log(item);
+         obj.stateTransition[obj.stateTransition.length] = item;//adds example to json file, the JSON.parse converts string to json object
+         console.log(JSON.stringify(obj));
+
+         insertDocument(db, function() {
+             db.close();
+         }, obj);
+         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+           if (err) return console.log(err);
+             console.log('POST sucessfull');
+         });*/
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });
+
 });
 
-app.post('/outputReccomendationsPOST', function (req, res) {
+app.post('/outputReccomendationsPOST/:id', function (req, res) {
   var item = req.body;
   console.log("Post outputReccomendations");
   //var obj = JSON.parse(input);//converts json to javascript object
   //var facebookapi = '{"AccountType": "snapchat","apikey": "q234", "id" : "5"}';//information to be added
   console.log(item);
-  obj.outputReccomendations[obj.outputReccomendations.length] = item;//adds example to json file, the JSON.parse converts string to json object
-  console.log(JSON.stringify(obj));
-  fs.writeFile('test.json', JSON.stringify(obj), function (err) {
-    if (err) return console.log(err);
-      console.log('POST sucessfull');
-  });
-  res.end(JSON.stringify(obj));
-  //res.end("Post inputKnowledgeItems");
+
+  var obj;
+  var id = new ObjectID(req.params.id);
+  var parsed_document;
+  //var str_doc;
+  //var id_to_be_passed = new ObjectID("57757132a4c101ac1a883b35"); //test
+   var cursor =db.collection(collect).find( { _id: id } );
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        //console.log("hi");
+         console.dir(doc);
+         //console.log("||||||||||||||||||||||||||");
+         //console.log(doc);
+         str_doc = JSON.stringify(doc);
+         obj = JSON.parse(str_doc);
+         //console.log(parsed_document.inputKnowledgeItems);
+         //console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+         //res.end(JSON.stringify(parsed_document.inputKnowledgeItems));
+
+
+         console.log(item);
+         obj.outputReccomendations[obj.outputReccomendations.length] = item;//adds example to json file, the JSON.parse converts string to json object
+         console.log(JSON.stringify(obj));
+
+         insertDocument(db, function() {
+             db.close();
+         }, obj);
+         /*fs.writeFile('test.json', JSON.stringify(obj), function (err) {
+           if (err) return console.log(err);
+             console.log('POST sucessfull');
+         });*/
+         res.end(JSON.stringify(obj));
+      } else {
+        /*
+          TODO: figure out what to here
+        */
+        //return doc;
+         //db.close();
+         //res.end(JSON.stringify(doc));
+
+      }
+
+    });  //res.end("Post inputKnowledgeItems");
 });
 
 
