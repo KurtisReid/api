@@ -25,15 +25,20 @@ MongoClient.connect(url, function(err, db) {
 
 
 
-    var insertDocument = function(db, callback, insert) {
 
+
+    var insertDocument = function(db, callback, insert) {
+      var itemID;
 
       db.collection(collect).insertOne(insert, function(err, result) {
         //assert.equal(err, null);
         console.log("Inserted a document into the collection.");
+        itemID = insert._id;
         //console.log(insert);
+        console.log("itemID: " + itemID);
         //console.log("                                                        ");
-        callback();
+
+        callback(itemID);
       });
     };
 
@@ -368,6 +373,53 @@ app.get('/outputReccomendationsGET/:id', function (req, res) {
   //res.end(JSON.stringify(obj.outputReccomendations));
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/newLFST/', function (req, res) {
+  var item = req.body;
+  //var itemID;
+  console.log("Post outputKnowledgeItems");
+
+  var itemID;
+
+  db.collection(collect).insertOne(item, function(err, result) {
+    //assert.equal(err, null);
+    console.log("Inserted a document into the collection.");
+    itemID = item._id;
+    //console.log(insert);
+    console.log("itemID: " + itemID);
+    res.end(itemID.toString());//sends user the id of the document
+  });
+
+/*  insertDocument(db, function() {
+    //itemID = item._id;
+    db.close();
+
+  }, item);*/
+  //console.log("itemID: " + itemID);
+//console.log("ttttttitemID: " + itemID);
+  //res.end(itemID);
+});
+
+
+
+
+
+
+
+
+
 
 
 
