@@ -1,7 +1,7 @@
 # api
 This is a node.js api that I am building as part of my reseach. It uses express framework.
 
-First Header | Second Header | Third Header
+Function | Method | URL
 ------------ | ------------- | ------------
 Get LFST document from database | GET | /GETById/{id}
 Get inputKnowledgeItems from database | GET | inputKnowledgeItemsGET/{id}
