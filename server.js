@@ -5,9 +5,9 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;//objectID object
 var assert = require('assert');
 
-var collect = "isThisReal";//collection name
+var collect = "isThisReal";//This is the name of the collection in the database where the information will be stored
 
-var url = 'mongodb://localhost:27017/LFST';
+var url = 'mongodb://localhost:27017/LFST';//this is the URL specifiying the port to connect to the database
 //var mongoCommands = require('getmongo.js');
 
 var bodyParser = require('body-parser');
@@ -385,7 +385,7 @@ app.get('/outputReccomendationsGET/:id', function (req, res) {
 
 
 
-
+// inserts new LFST file into
 app.post('/newLFST/', function (req, res) {
   var item = req.body;
   //var itemID;
