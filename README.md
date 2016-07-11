@@ -1,6 +1,15 @@
 # api
 This is a node.js api that I am building as part of my reseach. It uses express framework.
 
+**URL Parameters**
+
+Parameter | Type | Specification
+--------- | ---- | -------------
+{id} | String | id of LFST document in database
+{oid} | String | id of object in LFST document
+
+**URL Parameters**
+
 Function | Method | URL
 ------------ | ------------- | ------------
 Get LFST document from database | GET | /GETById/{id}
