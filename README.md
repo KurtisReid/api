@@ -1,5 +1,5 @@
 # api
-This is a node.js api that I am building as part of my reseach. It uses express framework.
+This is a node.js api that I am building as part of my research. It uses express framework.
 
 **URL Parameters**
 
@@ -17,7 +17,7 @@ Get inputKnowledgeItems from database | GET | inputKnowledgeItemsGET/{id}
 Get OutputKnowledgeItems from database | GET | /OutputKnowledgeItemsGET/{id}
 Get learning state from database | GET | /learningStateGET/{id}
 Get state Transition from database | GET | /stateTransitionGET/{id}
-Get output Reccomendations from database | GET | /outputReccomendationsGET/{id}
+Get output Recommendations from database | GET | /outputReccomendationsGET/{id}
 ------------ | ------------- | ------------
 Creates a new LFST file in the database, returns id of document | POST | /newLFST/
 Posts a new Input Knowledge Item into LFST | POST | /inputKnowledgeItemsPOST/{id}
