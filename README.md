@@ -9,10 +9,6 @@ Get OutputKnowledgeItems from database | GET | /OutputKnowledgeItemsGET/{id}
 Get learning state from database | GET | /learningStateGET/{id}
 Get state Transition from database | GET | /stateTransitionGET/{id}
 Get output Reccomendations from database | GET | /outputReccomendationsGET/{id}
-
-
-
-First Header | Second Header | Third Header
 ------------ | ------------- | ------------
 Creates a new LFST file in the database, returns id of document | POST | /newLFST/
 Posts a new Input Knowledge Item into LFST | POST | /inputKnowledgeItemsPOST/{id}
