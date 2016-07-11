@@ -15,4 +15,8 @@ Posts a new Input Knowledge Item into LFST | POST | /inputKnowledgeItemsPOST/{id
 Posts a new Output Knowledge Item into LFST | POST | /outputKnowledgeItemsPOST/{id}
 Posts a new Learning State into LFST | POST | /learningStatePOST/{id}
 Posts a new State Transition into LFST | POST | /stateTransitionPOST/{id}
-Posts a new output reccomendation into LFST | POST | /outputReccomendationsPOST/{id}
+Posts a new output recommendation into LFST | POST | /outputReccomendationsPOST/{id}
+------------ | ------------- | ------------
+Deletes specific output Knowledge Source object | DELETE | /outputKSDELETE/{id}/{oid}
+Deletes specific input Knowledge Source object | DELETE | /inputKSDELETE/{id}/{oid}
+Deletes specific output recommendation object | DELETE | /outputReccomendationsDELETE/{id}/{oid}
