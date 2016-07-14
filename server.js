@@ -19,10 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
+  if (err) {
+  console.log('Unable to connect to the mongoDB server. Error:', err);
+}
 
 
-  db.open(function(err, client){//opens database
+//try {
+//  db.open(function(err, client){//opens database
 
+  //  throw err;
+
+
+console.log("STARTED JKJKJKJKJKJKJKJKJKJKJKJKJKJKJKJKJKJKJKJK:")
 
 
 
@@ -842,5 +850,12 @@ var server = app.listen(8081, function () {
 
 });
 
-});
+//});
+//}
+//catch (err)
+//{
+  //console.log('catch block');
+  //console.log(err);
+  //console.log('END CATCH');
+//}
 });
